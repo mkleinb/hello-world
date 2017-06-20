@@ -103,13 +103,10 @@ deploy:
             if [ $HTTP_CODE -eq 404 ]; then
               echo "Tried to remove inactive deployment ${ORIGINAL_DEPLOY_ID} but it doesn't exist."
               # exit 0
-              NOT_FOUND=1
-            fi
 
-            if [ $NOT_FOUND -neq 1 ]
                 # First, the deployment must be stopped
                 curl ${INSECURE_CURL} -s -XPOST -H "Authorization: Bearer ${API_TOKEN}" ${SERVICE_MANAGER}/api/v2/deployments/${ORIGINAL_DEPLOY_ID}/stop
-
+            else
                 # Make sure it has stopped
                 TRY=0
                 MAX_TRIES=30
